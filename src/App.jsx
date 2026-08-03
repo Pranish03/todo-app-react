@@ -1,16 +1,14 @@
-// import { useState } from 'react'
-
+import { Route, Routes } from "react-router";
 import './App.css'
-import { Button } from "@/components/ui/button" 
+import { TodoPage } from "./pages/HomePage";
 
 function App() {
-  // const [count, setCount] = useState(0)
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <Button>Click me</Button> {/* test render */}
-    </div>
-  )
+   <Routes>
+    <Route path="/" element={<TodoPage/>} />
+   </Routes>
+  );
 }
 
 export default App
