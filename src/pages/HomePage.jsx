@@ -1,11 +1,9 @@
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router"; 
 
-//
-export function TodoPage() {
+export function HomePage() {
   return (
     <div className="p-3">
       <div className="flex item-center justify-between px-4 py-3 bg-white border-b">
@@ -45,17 +43,23 @@ export function TodoPage() {
             <div className="space-y-3">
               <div className="bg-white rounded-md p-4 shadow-sm border">
                 <h3 className="font-medium mb-1">Redesign onboarding flow</h3>
-                <p className="text-sm text-muted-foreground mb-2">Update the welcome screens and reduce steps to 3.</p>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Update the welcome screens and reduce steps to 3.
+                </p>
                 <Badge className="bg-red-100 text-red-700">High</Badge>
               </div>
 
               <div className="bg-white rounded-md p-4 shadow-sm border">
-                <h3 className="font-medium mb-1">Fix payment gateway timeout</h3>
-                <p className="text-sm text-muted-foreground mb-2">Stripe webhook failing on retry after 30s.</p>
+                <h3 className="font-medium mb-1">
+                  Fix payment gateway timeout
+                </h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Stripe webhook failing on retry after 30s.
+                </p>
                 <Badge className="bg-red-100 text-red-700">High</Badge>
               </div>
+            </div>
           </div>
-        </div>
           <div className="bg-muted/40 rounded-lg p-4">
             <div className="flex justify-between items-center mb-3">
               <h2 className="font-bold">In Progress</h2>
@@ -65,17 +69,23 @@ export function TodoPage() {
             <div className="space-y-3">
               <div className="bg-white rounded-md p-4 shadow-sm border">
                 <h3 className="font-medium mb-1">Redesign onboarding flow</h3>
-                <p className="text-sm text-muted-foreground mb-2">Update the welcome screens and reduce steps to 3.</p>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Update the welcome screens and reduce steps to 3.
+                </p>
                 <Badge className="bg-red-100 text-red-700">High</Badge>
               </div>
 
               <div className="bg-white rounded-md p-4 shadow-sm border">
-                <h3 className="font-medium mb-1">Fix payment gateway timeout</h3>
-                <p className="text-sm text-muted-foreground mb-2">Stripe webhook failing on retry after 30s.</p>
+                <h3 className="font-medium mb-1">
+                  Fix payment gateway timeout
+                </h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Stripe webhook failing on retry after 30s.
+                </p>
                 <Badge className="bg-red-100 text-red-700">High</Badge>
               </div>
+            </div>
           </div>
-        </div>
           <div className="bg-muted/40 rounded-lg p-4">
             <div className="flex justify-between items-center mb-3">
               <h2 className="font-bold">Done</h2>
@@ -85,23 +95,52 @@ export function TodoPage() {
             <div className="space-y-3">
               <div className="bg-white rounded-md p-4 shadow-sm border">
                 <h3 className="font-medium mb-1">Redesign onboarding flow</h3>
-                <p className="text-sm text-muted-foreground mb-2">Update the welcome screens and reduce steps to 3.</p>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Update the welcome screens and reduce steps to 3.
+                </p>
                 <Badge className="bg-red-100 text-red-700">High</Badge>
               </div>
 
               <div className="bg-white rounded-md p-4 shadow-sm border">
-                <h3 className="font-medium mb-1">Fix payment gateway timeout</h3>
-                <p className="text-sm text-muted-foreground mb-2">Stripe webhook failing on retry after 30s.</p>
+                <h3 className="font-medium mb-1">
+                  Fix payment gateway timeout
+                </h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Stripe webhook failing on retry after 30s.
+                </p>
                 <Badge className="bg-red-100 text-red-700">High</Badge>
               </div>
+            </div>
           </div>
         </div>
 
-        
-
-
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white rounded-full shadow-lg border px-2 py-2 flex gap-1">
+          <Link
+            to="/login"
+            className="px-4 py-2 rounded-full text-sm text-muted-foreground hover:bg-gray-100"
+          >
+            Login
+          </Link>
+          <Link
+            to="/signup"
+            className="px-4 py-2 rounded-full text-sm text-muted-foreground hover:bg-gray-100"
+          >
+            Sign up
+          </Link>
+          <Link
+            to="/"
+            className="px-4 py-2 rounded-full text-sm bg-indigo-600 text-white font-medium"
+          >
+            Home
+          </Link>
+          <Link
+            to="/settings"
+            className="px-4 py-2 rounded-full text-sm text-muted-foreground hover:bg-gray-100"
+          >
+            Settings
+          </Link>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
