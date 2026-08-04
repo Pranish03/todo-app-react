@@ -12,7 +12,10 @@ function App() {
     <Route path="/" element={<HomePage/>} />
     <Route path="/login" element={<LoginPage/>} />
     <Route path="/signup" element={<SignupPage/>} />
-    <Route path="/setting" element={<SettingPage/>} />
+      <Route path="/settings/profile" element={<SettingPage section="profile" />} />
+      <Route path="/settings/account" element={<SettingPage section="account" />} />
+      <Route path="/settings/notifications" element={<SettingPage section="notifications" />} />
+    
    </Routes>
   );
 }
