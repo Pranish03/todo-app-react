@@ -1,8 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router"; // add useNavigate here
+import { PageChange } from "@/components/home/PageChange";
 
 export function SignupPage() {
+  const navigate = useNavigate();
+
+  const handleSignup = () => {
+    navigate("/");
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-lg p-8 shadow-sm max-w-sm">
@@ -16,49 +23,34 @@ export function SignupPage() {
         </h1>
 
         <div className="space-y-4">
-
-            <div>
-                 <label className="text-sm font-medium">Name</label>
-            <Input
-              type="text"
-              placeholder="abc"
-              className={"mt-1"}
-            ></Input>
-            </div>
+          <div>
+            <label className="text-sm font-medium">Name</label>
+            <Input type="text" placeholder="abc" className={"mt-1"}></Input>
+          </div>
           <div>
             <label className="text-sm font-medium">Email</label>
-            <Input
-              type="email"
-              placeholder="abc@gmail.com"
-              className={"mt-1"}
-            ></Input>
+            <Input type="email" placeholder="abc@gmail.com" className={"mt-1"}></Input>
           </div>
           <div>
             <label className="text-sm font-medium">Password</label>
-            <Input
-              type="password"
-              placeholder="********"
-              className={"mt-1"}
-            ></Input>
+            <Input type="password" placeholder="********" className={"mt-1"}></Input>
           </div>
           <div>
             <label className="text-sm font-medium">Confirm Password</label>
-            <Input
-              type="password"
-              placeholder="********"
-              className={"mt-1"}
-            ></Input>
+            <Input type="password" placeholder="********" className={"mt-1"}></Input>
           </div>
-          <Button className={"w-full"}>Sign Up</Button>
+          <Button className={"w-full"} onClick={handleSignup}>Sign Up</Button>
         </div>
 
         <p className="text-sm text-center text-muted-foreground mt-6">
-         Already have an account?{" "}
+          Already have an account?{" "}
           <Link to="/login" className="text-indigo-600 font-medium">
             Login
           </Link>
         </p>
       </div>
+
+      <PageChange />
     </div>
   );
 }
