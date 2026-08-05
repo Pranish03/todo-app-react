@@ -26,11 +26,15 @@ export function TaskCard({ task, onClick }) {
       {...listeners}
       {...attributes}
       onClick={onClick}
-      className="bg-white rounded-md p-4 shadow-sm border cursor-pointer hover:shadow-md transition-shadow"
+      className="bg-white rounded-[10px] p-4 shadow-sm border cursor-pointer hover:shadow-md transition-shadow"
     >
-      <h3 className="font-medium mb-1">{task.title}</h3>
-      <p className="text-sm text-muted-foreground mb-2">{task.desc}</p>
-      <Badge className={priorityColor[task.priority]}>{task.priority}</Badge>
+      <div className="flex items-center justify-between">
+        <h3 className="font-medium mb-1">{task.title}</h3>
+        <Badge className={priorityColor[task.priority]}>{task.priority}</Badge>
+      </div>
+      <p className="text-sm text-muted-foreground mb-2 text-ellipsis">
+        {task.desc}
+      </p>
     </div>
   );
 }

@@ -7,7 +7,7 @@ export function Column({ id, title, tasks, onCardClick }) {
   return (
     <div
       ref={setNodeRef}
-      className={`bg-muted/40 rounded-lg p-4 transition-colors ${
+      className={`bg-muted/90 rounded-[10px] p-4 transition-colors ${
         isOver ? "bg-muted/70 ring-2 ring-indigo-400" : ""
       }`}
     >
