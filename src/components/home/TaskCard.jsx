@@ -32,7 +32,7 @@ export function TaskCard({ task, onClick }) {
       {...listeners}
       {...attributes}
       onClick={onClick}
-      className="cursor-pointer transition-shadow hover:shadow-md"
+      className="cursor-pointer transition-shadow hover:shadow"
     >
       <CardHeader>
         <CardTitle>

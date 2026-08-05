@@ -97,8 +97,7 @@ export function HomePage() {
     if (!over) return;
 
     const taskId = active.id;
-    const newStatus = over.id; // "todo" | "inprogress" | "done"
-
+    const newStatus = over.id;
     setTasks((prev) =>
       prev.map((t) => (t.id === taskId ? { ...t, status: newStatus } : t)),
     );
@@ -161,7 +160,7 @@ export function HomePage() {
 
           <DragOverlay>
             {activeTask ? (
-              <Card className="cursor-pointer transition-shadow shadow-md">
+              <Card className="cursor-pointer transition-shadow shadow">
                 <CardHeader>
                   <CardTitle>
                     <div className="flex items-start justify-between gap-2">
