@@ -81,7 +81,7 @@ export function EditTaskDialog({
                 value={form.priority}
                 onValueChange={(value) => setForm({ ...form, priority: value })}
               >
-                <SelectTrigger className="mt-1">
+                <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -98,7 +98,7 @@ export function EditTaskDialog({
                 value={form.status}
                 onValueChange={(value) => setForm({ ...form, status: value })}
               >
-                <SelectTrigger className="mt-1">
+                <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

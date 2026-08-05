@@ -83,7 +83,7 @@ export function AddTaskDialog({ onAddTask }) {
             <div>
               <label className="text-sm font-medium">Priority</label>
               <Select value={priority} onValueChange={setPriority}>
-                <SelectTrigger className="mt-1">
+                <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -97,7 +97,7 @@ export function AddTaskDialog({ onAddTask }) {
             <div>
               <label className="text-sm font-medium">Status</label>
               <Select value={status} onValueChange={setStatus}>
-                <SelectTrigger className="mt-1">
+                <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

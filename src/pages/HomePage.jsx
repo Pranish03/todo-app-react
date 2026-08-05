@@ -13,6 +13,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { Column } from "@/components/home/Column";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const priorityColor = {
   High: "bg-red-100 text-red-700",
@@ -111,7 +112,7 @@ export function HomePage() {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // must move 8px before it counts as a drag
+        distance: 8,
       },
     }),
   );
@@ -176,15 +177,23 @@ export function HomePage() {
 
           <DragOverlay>
             {activeTask ? (
-              <div className="bg-white rounded-md p-4 shadow-lg border rotate-2">
-                <h3 className="font-medium mb-1">{activeTask.title}</h3>
-                <p className="text-sm text-muted-foreground mb-2">
-                  {activeTask.desc}
-                </p>
-                <Badge className={priorityColor[activeTask.priority]}>
-                  {activeTask.priority}
-                </Badge>
-              </div>
+              <Card className="cursor-pointer transition-shadow shadow-md">
+                <CardHeader>
+                  <CardTitle>
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-medium">{activeTask.title}</h3>
+                      <Badge className={priorityColor[activeTask.priority]}>
+                        {activeTask.priority}
+                      </Badge>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {activeTask.desc}
+                  </p>
+                </CardContent>
+              </Card>
             ) : null}
           </DragOverlay>
         </DndContext>

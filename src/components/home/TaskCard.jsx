@@ -1,5 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardTitle, CardContent, CardHeader } from "@/components/ui/card";
 
 const priorityColor = {
   High: "bg-red-100 text-red-700",
@@ -9,7 +10,10 @@ const priorityColor = {
 
 export function TaskCard({ task, onClick }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({ id: task.id, data: { task } });
+    useDraggable({
+      id: task.id,
+      data: { task },
+    });
 
   const style = transform
     ? {
@@ -17,24 +21,34 @@ export function TaskCard({ task, onClick }) {
         opacity: isDragging ? 0.4 : 1,
         zIndex: isDragging ? 50 : "auto",
       }
-    : undefined;
+    : {
+        opacity: isDragging ? 0.4 : 1,
+      };
 
   return (
-    <div
+    <Card
       ref={setNodeRef}
       style={style}
       {...listeners}
       {...attributes}
       onClick={onClick}
-      className="bg-white rounded-[10px] p-4 shadow-sm border cursor-pointer hover:shadow-md transition-shadow"
+      className="cursor-pointer transition-shadow hover:shadow-md"
     >
-      <div className="flex items-center justify-between">
-        <h3 className="font-medium mb-1">{task.title}</h3>
-        <Badge className={priorityColor[task.priority]}>{task.priority}</Badge>
-      </div>
-      <p className="text-sm text-muted-foreground mb-2 text-ellipsis">
-        {task.desc}
-      </p>
-    </div>
+      <CardHeader>
+        <CardTitle>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="font-medium">{task.title}</h3>
+            <Badge className={priorityColor[task.priority]}>
+              {task.priority}
+            </Badge>
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-muted-foreground line-clamp-2">
+          {task.desc}
+        </p>
+      </CardContent>
+    </Card>
   );
 }
