@@ -1,4 +1,3 @@
-import { PageChange } from "@/components/home/PageChange";
 import { SettingSidebar } from "@/components/settings/SettingSidebar";
 import { ProfileSection } from "@/components/settings/ProfileSection";
 import { AccountSection } from "@/components/settings/AccountSection";
@@ -8,7 +7,6 @@ import { CheckSquare } from "lucide-react";
 export function SettingPage({ section }) {
   return (
     <div className="min-h-screen bg-gray-50">
-
       <div className="flex items-center px-8 py-4 bg-white border-b">
         <div className="flex items-center gap-2">
           <div className="bg-indigo-600 text-white rounded-md p-1.5">
@@ -28,8 +26,6 @@ export function SettingPage({ section }) {
           {section === "notifications" && <NotificationSection />}
         </div>
       </div>
-
-      <PageChange />
     </div>
   );
 }

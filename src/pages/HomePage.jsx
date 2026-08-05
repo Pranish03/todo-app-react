@@ -1,9 +1,7 @@
 import { AddTaskDialog } from "@/components/home/AddTaskDialog";
 import { EditTaskDialog } from "@/components/home/EditTaskDialog";
-import { PageChange } from "@/components/home/PageChange";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { Link } from "react-router";
 import {
   DndContext,
   DragOverlay,
@@ -14,6 +12,7 @@ import {
 } from "@dnd-kit/core";
 import { Column } from "@/components/home/Column";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Navbar } from "@/components/Navbar";
 
 const priorityColor = {
   High: "bg-red-100 text-red-700",
@@ -119,25 +118,10 @@ export function HomePage() {
 
   return (
     <div>
-      <div className="flex item-center justify-between container mx-auto py-3 bg-white border-b">
-        <div>
-          <span className="font-semibold">Do Me</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-muted-foreground bg-gray-300 px-3 py-1 rounded-full">
-            I Will Do
-          </span>
-
-          <Link to="/settings/profile">
-            <div className="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium">
-              PC
-            </div>
-          </Link>
-        </div>
-      </div>
+      <Navbar />
 
       <div className="container mx-auto">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mt-10 mb-6">
           <div>
             <h1 className="text-2xl font-bold">My Tasks</h1>
             <p className="text-muted-foreground text-sm">
@@ -197,8 +181,6 @@ export function HomePage() {
             ) : null}
           </DragOverlay>
         </DndContext>
-
-        <PageChange />
       </div>
 
       <EditTaskDialog

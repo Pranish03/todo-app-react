@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router"; // add useNavigate here
-import { PageChange } from "@/components/home/PageChange";
+import { Link, useNavigate } from "react-router";
 
 export function SignupPage() {
   const navigate = useNavigate();
@@ -17,7 +16,9 @@ export function SignupPage() {
           <div className="bg-indigo-600 text-white rounded-md p-1.5">Logo</div>
           <span className="font-semibold">TaskFlow</span>
         </div>
-        <h1 className="text-xl font-bold text-center mb-1">Create an Account</h1>
+        <h1 className="text-xl font-bold text-center mb-1">
+          Create an Account
+        </h1>
         <h1 className="text-sm text-muted-foreground text-center mb-6">
           Get Started
         </h1>
@@ -29,17 +30,31 @@ export function SignupPage() {
           </div>
           <div>
             <label className="text-sm font-medium">Email</label>
-            <Input type="email" placeholder="abc@gmail.com" className={"mt-1"}></Input>
+            <Input
+              type="email"
+              placeholder="abc@gmail.com"
+              className={"mt-1"}
+            ></Input>
           </div>
           <div>
             <label className="text-sm font-medium">Password</label>
-            <Input type="password" placeholder="********" className={"mt-1"}></Input>
+            <Input
+              type="password"
+              placeholder="********"
+              className={"mt-1"}
+            ></Input>
           </div>
           <div>
             <label className="text-sm font-medium">Confirm Password</label>
-            <Input type="password" placeholder="********" className={"mt-1"}></Input>
+            <Input
+              type="password"
+              placeholder="********"
+              className={"mt-1"}
+            ></Input>
           </div>
-          <Button className={"w-full"} onClick={handleSignup}>Sign Up</Button>
+          <Button className={"w-full"} onClick={handleSignup}>
+            Sign Up
+          </Button>
         </div>
 
         <p className="text-sm text-center text-muted-foreground mt-6">
@@ -49,8 +64,6 @@ export function SignupPage() {
           </Link>
         </p>
       </div>
-
-      <PageChange />
     </div>
   );
 }
