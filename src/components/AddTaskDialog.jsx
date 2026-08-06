@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,35 +18,51 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldError,
+} from "@/components/ui/field";
+import { createTodoSchema } from "@/schemas/todoSchema";
 import { Plus } from "lucide-react";
 
 export function AddTaskDialog({ onAddTask }) {
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [priority, setPriority] = useState("Medium");
-  const [status, setStatus] = useState("todo");
 
-  const handleSubmit = () => {
-    if (title.trim() === "") return;
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: "",
+      description: "",
+      priority: "medium",
+      status: "todo",
+    },
+    resolver: zodResolver(createTodoSchema),
+  });
 
+  const onSubmit = (data) => {
     onAddTask({
       id: crypto.randomUUID(),
-      title,
-      desc,
-      priority,
-      status,
+      ...data,
     });
-
-    setTitle("");
-    setDesc("");
-    setPriority("Medium");
-    setStatus("todo");
+    reset();
     setOpen(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next);
+        if (!next) reset();
+      }}
+    >
       <DialogTrigger
         render={
           <Button>
@@ -58,64 +76,88 @@ export function AddTaskDialog({ onAddTask }) {
           <DialogTitle>Add new task</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Title *</label>
-            <Input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Design new onboarding flow"
-              className="mt-1"
-            />
-          </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="title">Title *</FieldLabel>
+              <Input
+                id="title"
+                placeholder="e.g. Design new onboarding flow"
+                aria-invalid={!!errors.title}
+                {...register("title")}
+              />
+              {errors.title && <FieldError errors={[errors.title]} />}
+            </Field>
 
-          <div>
-            <label className="text-sm font-medium">Description</label>
-            <Textarea
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-              placeholder="Add more context about this task..."
-              className="mt-1"
-            />
-          </div>
+            <Field>
+              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <Textarea
+                id="description"
+                placeholder="Add more context about this task..."
+                aria-invalid={!!errors.description}
+                {...register("description")}
+              />
+              {errors.description && (
+                <FieldError errors={[errors.description]} />
+              )}
+            </Field>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Priority</label>
-              <Select value={priority} onValueChange={setPriority}>
-                <SelectTrigger className="mt-1 w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="High">High</SelectItem>
-                  <SelectItem value="Medium">Medium</SelectItem>
-                  <SelectItem value="Low">Low</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 gap-4">
+              <Field>
+                <FieldLabel htmlFor="priority">Priority</FieldLabel>
+                <Controller
+                  name="priority"
+                  control={control}
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger id="priority" className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="low">Low</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.priority && <FieldError errors={[errors.priority]} />}
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="status">Status</FieldLabel>
+                <Controller
+                  name="status"
+                  control={control}
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger id="status" className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="todo">To do</SelectItem>
+                        <SelectItem value="ongoing">In progress</SelectItem>
+                        <SelectItem value="completed">Done</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.status && <FieldError errors={[errors.status]} />}
+              </Field>
             </div>
 
-            <div>
-              <label className="text-sm font-medium">Status</label>
-              <Select value={status} onValueChange={setStatus}>
-                <SelectTrigger className="mt-1 w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="todo">To do</SelectItem>
-                  <SelectItem value="inprogress">In progress</SelectItem>
-                  <SelectItem value="done">Done</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Add task</Button>
             </div>
-          </div>
-
-          <div className="flex justify-end gap-2 pt-2">
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSubmit}>Add task</Button>
-          </div>
-        </div>
+          </FieldGroup>
+        </form>
       </DialogContent>
     </Dialog>
   );

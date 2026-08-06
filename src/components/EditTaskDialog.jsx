@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +17,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldError,
+} from "@/components/ui/field";
+import { updateTodoSchema } from "@/schemas/todoSchema";
 
 export function EditTaskDialog({
   task,
@@ -23,105 +32,145 @@ export function EditTaskDialog({
   onUpdateTask,
   onDeleteTask,
 }) {
-  // initialize state directly from task — no useEffect needed
-  const [form, setForm] = useState({
-    title: task?.title ?? "",
-    desc: task?.desc ?? "",
-    priority: task?.priority ?? "Medium",
-    status: task?.status ?? "todo",
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: task?.title ?? "",
+      description: task?.description ?? "",
+      priority: task?.priority ?? "medium",
+      status: task?.status ?? "todo",
+    },
+    resolver: zodResolver(updateTodoSchema),
   });
 
-  const handleUpdate = () => {
-    if (form.title.trim() === "") return;
+  if (!task) return null;
 
+  const onSubmit = (data) => {
     onUpdateTask({
       ...task,
-      ...form,
+      ...data,
     });
     onOpenChange(false);
   };
 
-  const handleDelete = () => {
+  const handleDeleteClick = () => {
+    if (!confirmingDelete) {
+      setConfirmingDelete(true);
+      return;
+    }
     onDeleteTask(task?.id);
     onOpenChange(false);
   };
 
-  if (!task) return null;
+  const handleOpenChange = (next) => {
+    if (!next) setConfirmingDelete(false);
+    onOpenChange(next);
+  };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit task</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Title *</label>
-            <Input
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
-              className="mt-1"
-            />
-          </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="title">Title *</FieldLabel>
+              <Input
+                id="title"
+                aria-invalid={!!errors.title}
+                {...register("title")}
+              />
+              {errors.title && <FieldError errors={[errors.title]} />}
+            </Field>
 
-          <div>
-            <label className="text-sm font-medium">Description</label>
-            <Textarea
-              value={form.desc}
-              onChange={(e) => setForm({ ...form, desc: e.target.value })}
-              className="mt-1"
-            />
-          </div>
+            <Field>
+              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <Textarea
+                id="description"
+                aria-invalid={!!errors.description}
+                {...register("description")}
+              />
+              {errors.description && (
+                <FieldError errors={[errors.description]} />
+              )}
+            </Field>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Priority</label>
-              <Select
-                value={form.priority}
-                onValueChange={(value) => setForm({ ...form, priority: value })}
-              >
-                <SelectTrigger className="mt-1 w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="High">High</SelectItem>
-                  <SelectItem value="Medium">Medium</SelectItem>
-                  <SelectItem value="Low">Low</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 gap-4">
+              <Field>
+                <FieldLabel htmlFor="priority">Priority</FieldLabel>
+                <Controller
+                  name="priority"
+                  control={control}
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger id="priority" className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="low">Low</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.priority && <FieldError errors={[errors.priority]} />}
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="status">Status</FieldLabel>
+                <Controller
+                  name="status"
+                  control={control}
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger id="status" className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="todo">To do</SelectItem>
+                        <SelectItem value="ongoing">In progress</SelectItem>
+                        <SelectItem value="completed">Done</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.status && <FieldError errors={[errors.status]} />}
+              </Field>
             </div>
 
-            <div>
-              <label className="text-sm font-medium">Status</label>
-              <Select
-                value={form.status}
-                onValueChange={(value) => setForm({ ...form, status: value })}
-              >
-                <SelectTrigger className="mt-1 w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="todo">To do</SelectItem>
-                  <SelectItem value="inprogress">In progress</SelectItem>
-                  <SelectItem value="done">Done</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex justify-between pt-2">
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  onClick={handleDeleteClick}
+                >
+                  {confirmingDelete ? "Confirm delete" : "Delete"}
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => onOpenChange(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit">Save changes</Button>
+              </div>
             </div>
-          </div>
-
-          <div className="flex justify-between pt-2">
-            <Button variant="destructive" onClick={handleDelete}>
-              Delete
-            </Button>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => onOpenChange(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleUpdate}>Save changes</Button>
-            </div>
-          </div>
-        </div>
+          </FieldGroup>
+        </form>
       </DialogContent>
     </Dialog>
   );
