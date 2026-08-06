@@ -1,23 +1,35 @@
-import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { KeyRound } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { changePasswordSchema } from "@/schemas/authSchema";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 
 export function Profile() {
-  const [password, setPassword] = useState({
-    current: "",
-    next: "",
-    confirm: "",
-  });
-
-  const handlePasswordChange = () => {
-    if (!password.current || !password.next || !password.confirm) return;
-    if (password.next !== password.confirm) return;
-    // TODO: wire up to backend
-    setPassword({ current: "", next: "", confirm: "" });
+  const onSubmit = (data) => {
+    console.log(data);
   };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+    resolver: zodResolver(changePasswordSchema),
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -46,7 +58,6 @@ export function Profile() {
             </CardContent>
           </Card>
 
-          {/* Password change */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -58,55 +69,64 @@ export function Profile() {
               </p>
             </CardHeader>
             <CardContent>
-              <div className="mb-4">
-                <label className="text-sm font-medium">Current password</label>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  className="mt-1"
-                  value={password.current}
-                  onChange={(e) =>
-                    setPassword({ ...password, current: e.target.value })
-                  }
-                />
-              </div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FieldGroup>
+                  <Field>
+                    <FieldLabel htmlFor="oldPassword">
+                      Current Password
+                    </FieldLabel>
+                    <Input
+                      id="oldPassword"
+                      type="password"
+                      placeholder="••••••••"
+                      aria-invalid={!!errors.oldPassword}
+                      {...register("oldPassword")}
+                    />
 
-              <div className="mb-4">
-                <label className="text-sm font-medium">New password</label>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  className="mt-1"
-                  value={password.next}
-                  onChange={(e) =>
-                    setPassword({ ...password, next: e.target.value })
-                  }
-                />
-              </div>
+                    {errors.oldPassword && (
+                      <FieldError errors={[errors.oldPassword]} />
+                    )}
+                  </Field>
 
-              <div className="mb-6">
-                <label className="text-sm font-medium">
-                  Confirm new password
-                </label>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  className="mt-1"
-                  value={password.confirm}
-                  onChange={(e) =>
-                    setPassword({ ...password, confirm: e.target.value })
-                  }
-                />
-                {password.next &&
-                  password.confirm &&
-                  password.next !== password.confirm && (
-                    <p className="text-xs text-destructive mt-1">
-                      Passwords don't match.
-                    </p>
-                  )}
-              </div>
+                  <Field>
+                    <FieldLabel htmlFor="newPassword">
+                      Current Password
+                    </FieldLabel>
+                    <Input
+                      id="newPassword"
+                      type="password"
+                      placeholder="••••••••"
+                      aria-invalid={!!errors.newPassword}
+                      {...register("newPassword")}
+                    />
 
-              <Button onClick={handlePasswordChange}>Update password</Button>
+                    {errors.newPassword && (
+                      <FieldError errors={[errors.newPassword]} />
+                    )}
+                  </Field>
+
+                  <Field>
+                    <FieldLabel htmlFor="confirmPassword">
+                      Current Password
+                    </FieldLabel>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      placeholder="••••••••"
+                      aria-invalid={!!errors.confirmPassword}
+                      {...register("confirmPassword")}
+                    />
+
+                    {errors.confirmPassword && (
+                      <FieldError errors={[errors.confirmPassword]} />
+                    )}
+                  </Field>
+
+                  <Field>
+                    <Button type="submit">Update password</Button>
+                  </Field>
+                </FieldGroup>
+              </form>
             </CardContent>
           </Card>
         </div>
