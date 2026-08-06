@@ -26,7 +26,7 @@ export function Register() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      fullName: "",
+      full_name: "",
       email: "",
       password: "",
     },
@@ -35,7 +35,7 @@ export function Register() {
 
   const onSubmit = (data) => {
     console.log(
-      `fullName: ${data.fullName}, email: ${data.email}, password: ${data.password}`,
+      `full name: ${data.full_name}, email: ${data.email}, password: ${data.password}`,
     );
   };
 
@@ -59,16 +59,16 @@ export function Register() {
             <form onSubmit={handleSubmit(onSubmit)}>
               <FieldGroup>
                 <Field>
-                  <FieldLabel htmlFor="fullname">Full Name</FieldLabel>
+                  <FieldLabel htmlFor="full_name">Full Name</FieldLabel>
                   <Input
-                    id="fullname"
+                    id="full_name"
                     type="text"
                     placeholder="John Doe"
-                    aria-invalid={!!errors.fullName}
-                    {...register("fullName")}
+                    aria-invalid={!!errors.full_name}
+                    {...register("full_name")}
                   />
 
-                  {errors.email && <FieldError errors={[errors.fullName]} />}
+                  {errors.email && <FieldError errors={[errors.full_name]} />}
                 </Field>
 
                 <Field>
