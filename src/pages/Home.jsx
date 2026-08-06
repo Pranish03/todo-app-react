@@ -20,7 +20,7 @@ const priorityColor = {
   Low: "bg-green-100 text-green-700",
 };
 
-export function HomePage() {
+export function Home() {
   const [tasks, setTasks] = useState([
     {
       id: 1,

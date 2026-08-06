@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { KeyRound } from "lucide-react";
 
-export function ProfilePage() {
+export function Profile() {
   const [password, setPassword] = useState({
     current: "",
     next: "",
@@ -27,7 +27,6 @@ export function ProfilePage() {
         <h1 className="text-2xl font-bold mb-6">Settings</h1>
 
         <div className="max-w-2xl space-y-6">
-          {/* Static profile info */}
           <Card>
             <CardHeader>
               <CardTitle>Profile</CardTitle>
