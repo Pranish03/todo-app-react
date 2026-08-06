@@ -1,5 +1,5 @@
-import { AddTaskDialog } from "@/components/home/AddTaskDialog";
-import { EditTaskDialog } from "@/components/home/EditTaskDialog";
+import { AddTaskDialog } from "@/components/AddTaskDialog";
+import { EditTaskDialog } from "@/components/EditTaskDialog";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import {
@@ -10,7 +10,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { Column } from "@/components/home/Column";
+import { Column } from "@/components/Column";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Navbar } from "@/components/Navbar";
 
