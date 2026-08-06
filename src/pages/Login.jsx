@@ -59,6 +59,7 @@ export function Login() {
                   <FieldLabel htmlFor="email">Email</FieldLabel>
                   <Input
                     id="email"
+                    type="email"
                     placeholder="m@example.com"
                     aria-invalid={!!errors.email}
                     {...register("email")}
@@ -71,6 +72,7 @@ export function Login() {
                   <Input
                     id="password"
                     type="password"
+                    placeholder="••••••••"
                     aria-invalid={!!errors.password}
                     {...register("password")}
                   />

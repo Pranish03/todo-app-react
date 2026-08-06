@@ -88,6 +88,7 @@ export function Register() {
                   <Input
                     id="password"
                     type="password"
+                    placeholder="••••••••"
                     aria-invalid={!!errors.password}
                     {...register("password")}
                   />
