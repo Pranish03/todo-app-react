@@ -116,7 +116,7 @@ export function HomePage() {
   );
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
 
       <div className="container mx-auto">

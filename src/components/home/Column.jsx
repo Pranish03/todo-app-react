@@ -8,9 +8,7 @@ export function Column({ id, title, tasks, onCardClick }) {
   return (
     <Card
       ref={setNodeRef}
-      className={`bg-muted/40 transition-all ${
-        isOver ? "ring-2 ring-primary" : ""
-      }`}
+      className={`transition-all ${isOver ? "ring-2 ring-primary" : ""}`}
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle className="text-lg">{title}</CardTitle>
