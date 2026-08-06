@@ -21,15 +21,33 @@ export function Navbar() {
         </Link>
 
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              Pranish Chaulagain
-              <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger
+            render={
+              <Button variant="ghost">
+                Pranish Chaulagain
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </Button>
+            }
+          />
 
-          <DropdownMenuContent align="end" className="w-32">
-            <DropdownMenuItem onClick={() => navigate("/settings/profile")}>
+          <DropdownMenuContent align="end" className="w-56">
+            <div className="flex items-center gap-2 px-1.5 py-1">
+              <div className="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-medium shrink-0">
+                PC
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">
+                  Pranish Chaulagain
+                </p>
+                <p className="text-xs text-muted-foreground truncate">
+                  pc@pranishchaulagain.com.np
+                </p>
+              </div>
+            </div>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem onClick={() => navigate("/profile")}>
               <User className="h-4 w-4" />
               Profile
             </DropdownMenuItem>
@@ -37,8 +55,8 @@ export function Navbar() {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
+              variant="destructive"
               onClick={() => console.log("Logout")}
-              className="text-red-600 focus:text-red-600"
             >
               <LogOut className="h-4 w-4" />
               Logout
